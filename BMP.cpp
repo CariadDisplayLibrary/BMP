@@ -54,11 +54,11 @@ void BMP::drawIdx(DisplayCore *dev, int x, int y, int32_t trans) {
     if (trans < 0) {
         dev->openWindow(x, y, getWidth(), getHeight());
     }
-    for (uint32_t iy = 0; iy < getHeight(); iy++) {
+    for (int iy = 0; iy < getHeight(); iy++) {
         uint32_t line = getHeight() - iy - 1;
-        for (uint32_t ix = 0; ix < getWidth(); ix++) {
+        for (int ix = 0; ix < getWidth(); ix++) {
             uint32_t pix = line * getWidth() + ix;
-            struct BitmapPixel32 *p = &_palette[_image[pix]];
+            struct BitmapPixel32 *p = &_palette[(int)_image[pix]];
             color_t col = rgb(p->g, p->b, p->a);
             if (_filter != NULL) {
                 col = _filter->process(col);
@@ -81,20 +81,20 @@ void BMP::draw565(DisplayCore *dev, int x, int y, int32_t trans) {
     if (trans < 0) {
         dev->openWindow(x, y, getWidth(), getHeight());
     }
-    for (uint32_t iy = 0; iy < getHeight(); iy++) {
+    for (int iy = 0; iy < getHeight(); iy++) {
         uint32_t line = getHeight() - iy - 1;
-        for (uint32_t ix = 0; ix < getWidth(); ix++) {
+        for (int ix = 0; ix < getWidth(); ix++) {
             uint32_t pix = line * getWidth() + ix;
             uint32_t offset = pix * 2;
-            color_t *p = (color_t *)(_image + offset);
-            color_t col = *p;
+            color_t p = (_image[offset] << 8) | _image[offset+1]; //(color_t *)(_image + offset);
+            color_t col = p;
             if (_filter != NULL) {
                 col = _filter->process(col);
             }
             if (trans < 0) {
                 dev->windowData(col);
             } else {
-                if (*p != trans) {
+                if (p != trans) {
                     dev->setPixel(x + ix, y + iy, col);
                 }
             }
@@ -109,9 +109,9 @@ void BMP::drawRGB(DisplayCore *dev, int x, int y, int32_t trans) {
     if (trans < 0) {
         dev->openWindow(x, y, getWidth(), getHeight());
     }
-    for (uint32_t iy = 0; iy < getHeight(); iy++) {
+    for (int iy = 0; iy < getHeight(); iy++) {
         uint32_t line = getHeight() - iy - 1;
-        for (uint32_t ix = 0; ix < getWidth(); ix++) {
+        for (int ix = 0; ix < getWidth(); ix++) {
             uint32_t pix = line * getWidth() + ix;
             uint32_t offset = pix * 3;
             struct BitmapPixel24 *p = (struct BitmapPixel24 *)(_image + offset);
@@ -172,9 +172,9 @@ void BMP::drawRGBA(DisplayCore *dev, int x, int y, int32_t trans) {
             aShift++;
         }
     } 
-    for (uint32_t iy = 0; iy < getHeight(); iy++) {
+    for (int iy = 0; iy < getHeight(); iy++) {
         uint32_t line = getHeight() - iy - 1;
-        for (uint32_t ix = 0; ix < getWidth(); ix++) {
+        for (int ix = 0; ix < getWidth(); ix++) {
             uint32_t pix = line * getWidth() + ix;
             uint32_t offset = pix * 4;
             uint32_t red, green, blue, alpha;
@@ -220,8 +220,8 @@ void BMP::draw(DisplayCore *dev, int x, int y) {
     }
         
     // Unable to decode the image - use colour fuzz instead.
-    for (uint32_t iy = 0; iy < getHeight(); iy++) {
-        for (uint32_t ix = 0; ix < getWidth(); ix++) {
+    for (int iy = 0; iy < getHeight(); iy++) {
+        for (int ix = 0; ix < getWidth(); ix++) {
             dev->setPixel(x + ix, y + iy, rand() & 0xFFFF);
         }
     }
@@ -244,13 +244,13 @@ void BMP::draw(DisplayCore *dev, int x, int y, color_t trans) {
     }
         
     // Unable to decode the image - use colour fuzz instead.
-    for (uint32_t iy = 0; iy < getHeight(); iy++) {
-        for (uint32_t ix = 0; ix < getWidth(); ix++) {
+    for (int iy = 0; iy < getHeight(); iy++) {
+        for (int ix = 0; ix < getWidth(); ix++) {
             dev->setPixel(x + ix, y + iy, rand() & 0xFFFF);
         }
     }
 }
 
-void BMP::drawTransformed(DisplayCore *dev, int x, int y, int transform) {}
-void BMP::drawTransformed(DisplayCore *dev, int x, int y, int transform, color_t t) {}
+void BMP::drawTransformed(DisplayCore __attribute__((unused)) *dev, int __attribute__((unused)) x, int __attribute__((unused)) y, int __attribute__((unused)) transform) {}
+void BMP::drawTransformed(DisplayCore __attribute__((unused)) *dev, int __attribute__((unused)) x, int __attribute__((unused)) y, int __attribute__((unused)) transform, color_t __attribute__((unused)) t) {}
 

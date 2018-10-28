@@ -12,7 +12,7 @@ XBSC-Group: DisplayCore
 XBSC-Subgroup: Image
 Depends: libdisplaycore-core
 Provides: BMP.h
-Description: BMP library
+Description: BMP
  Display BMP files from flash memory or RAM
 
 

@@ -1,2 +1,2 @@
-BMP.cpp libraries/DisplayCore/BMP
-BMP.h libraries/DisplayCore/BMP
+src libraries/DisplayCore/BMP
+library.properties libraries/DisplayCore/BMP

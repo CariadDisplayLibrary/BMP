@@ -50,7 +50,7 @@ BMP::BMP(const char *data) {
     }
 }
 
-void BMP::drawIdx(DisplayCore *dev, int x, int y, int32_t trans) {
+void BMP::drawIdx(Cariad *dev, int x, int y, int32_t trans) {
     if (trans < 0) {
         dev->openWindow(x, y, getWidth(), getHeight());
     }
@@ -77,7 +77,7 @@ void BMP::drawIdx(DisplayCore *dev, int x, int y, int32_t trans) {
     }
 }
 
-void BMP::draw565(DisplayCore *dev, int x, int y, int32_t trans) {
+void BMP::draw565(Cariad *dev, int x, int y, int32_t trans) {
     if (trans < 0) {
         dev->openWindow(x, y, getWidth(), getHeight());
     }
@@ -105,7 +105,7 @@ void BMP::draw565(DisplayCore *dev, int x, int y, int32_t trans) {
     }
 }
 
-void BMP::drawRGB(DisplayCore *dev, int x, int y, int32_t trans) {
+void BMP::drawRGB(Cariad *dev, int x, int y, int32_t trans) {
     if (trans < 0) {
         dev->openWindow(x, y, getWidth(), getHeight());
     }
@@ -133,7 +133,7 @@ void BMP::drawRGB(DisplayCore *dev, int x, int y, int32_t trans) {
     }
 }
 
-void BMP::drawRGBA(DisplayCore *dev, int x, int y, int32_t trans) {
+void BMP::drawRGBA(Cariad *dev, int x, int y, int32_t trans) {
     int rShift = 0;
     int gShift = 8;
     int bShift = 16;
@@ -203,7 +203,7 @@ void BMP::drawRGBA(DisplayCore *dev, int x, int y, int32_t trans) {
     }
 }
 
-void BMP::draw(DisplayCore *dev, int x, int y) {
+void BMP::draw(Cariad *dev, int x, int y) {
     switch (_info->biBitCount) {
         case 8:
             drawIdx(dev, x, y, -1);
@@ -227,7 +227,7 @@ void BMP::draw(DisplayCore *dev, int x, int y) {
     }
 }
 
-void BMP::draw(DisplayCore *dev, int x, int y, color_t trans) {
+void BMP::draw(Cariad *dev, int x, int y, color_t trans) {
     switch (_info->biBitCount) {
         case 8:
             drawIdx(dev, x, y, trans);
@@ -251,6 +251,6 @@ void BMP::draw(DisplayCore *dev, int x, int y, color_t trans) {
     }
 }
 
-void BMP::drawTransformed(DisplayCore __attribute__((unused)) *dev, int __attribute__((unused)) x, int __attribute__((unused)) y, int __attribute__((unused)) transform) {}
-void BMP::drawTransformed(DisplayCore __attribute__((unused)) *dev, int __attribute__((unused)) x, int __attribute__((unused)) y, int __attribute__((unused)) transform, color_t __attribute__((unused)) t) {}
+void BMP::drawTransformed(Cariad __attribute__((unused)) *dev, int __attribute__((unused)) x, int __attribute__((unused)) y, int __attribute__((unused)) transform) {}
+void BMP::drawTransformed(Cariad __attribute__((unused)) *dev, int __attribute__((unused)) x, int __attribute__((unused)) y, int __attribute__((unused)) transform, color_t __attribute__((unused)) t) {}
 
